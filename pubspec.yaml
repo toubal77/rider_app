@@ -31,7 +31,6 @@ dependencies:
   firebase_auth: ^3.0.1
   firebase_core: ^1.4.0
   firebase_database: ^7.1.2
-  cloud_firestore: ^2.4.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -75,13 +74,13 @@ flutter:
   fonts:
     - family: bolt-regular
       fonts:
-        - asset: fonts/bolt-regular.ttf
+        - asset: assets/fonts/bolt-regular.ttf
     - family: bolt-semibold
       fonts:
-        - asset: fonts/bolt-semibold.ttf
+        - asset: assets/fonts/bolt-semibold.ttf
     - family: Signatre
       fonts:
-        - asset: fonts/Signatra.ttf
+        - asset: assets/fonts/Signatra.ttf
   #         style: italic
   #   - family: Trajan Pro
   #     fonts:
