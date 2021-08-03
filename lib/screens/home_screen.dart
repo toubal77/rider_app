@@ -1,7 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:rider_app/widgets/drawer_app.dart';
+import 'package:rider_app/widgets/drawer_drawer.dart';
+import 'package:rider_app/widgets/map_app.dart';
+import 'package:rider_app/widgets/search_field.dart';
+import 'package:rider_app/widgets/text_bottom.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -11,28 +13,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Completer<GoogleMapController> _mapController = Completer();
-  late GoogleMapController _googleController;
+  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Home Page'),
-      ),
+      key: _scaffoldKey,
+      drawer: DrawerDrawer(),
       body: Stack(
         children: [
-          GoogleMap(
-            mapType: MapType.normal,
-            myLocationButtonEnabled: true,
-            initialCameraPosition: CameraPosition(
-              target: LatLng(37.43296265331129, -122.08832357078792),
-              zoom: 14.4746,
-            ),
-            onMapCreated: (GoogleMapController controller) {
-              _mapController.complete(controller);
-              _googleController = controller;
-            },
-          ),
+          MapApp(),
+          DrawerApp(keyScaffold: _scaffoldKey),
           Positioned(
             left: 0,
             right: 0,
@@ -77,33 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     SizedBox(
                       height: 20,
                     ),
-                    Container(
-                      height: 45,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(15),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black54,
-                            blurRadius: 6,
-                            spreadRadius: 0.5,
-                            offset: Offset(0.7, 0.7),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 15,
-                          ),
-                          Icon(Icons.search, color: Colors.grey),
-                          SizedBox(
-                            width: 15,
-                          ),
-                          Text('Search Drop off'),
-                        ],
-                      ),
-                    ),
+                    SearchField(),
                     SizedBox(
                       height: 10,
                     ),
@@ -115,32 +79,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     SizedBox(
                       height: 16,
                     ),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.home,
-                          color: Colors.grey,
-                        ),
-                        SizedBox(
-                          width: 12,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Add Home'),
-                            SizedBox(
-                              height: 4,
-                            ),
-                            Text(
-                              'Your living home address',
-                              style: TextStyle(
-                                color: Colors.black54,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+                    TextBottom(
+                      icon: Icon(Icons.home, color: Colors.grey),
+                      title: 'Add Home',
+                      subTitle: 'Your living home address',
                     ),
                     SizedBox(
                       height: 10,
@@ -153,32 +95,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     SizedBox(
                       height: 16,
                     ),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.work,
-                          color: Colors.grey,
-                        ),
-                        SizedBox(
-                          width: 12,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Add Work'),
-                            SizedBox(
-                              height: 4,
-                            ),
-                            Text(
-                              'Your office address',
-                              style: TextStyle(
-                                color: Colors.black54,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+                    TextBottom(
+                      icon: Icon(Icons.work, color: Colors.grey),
+                      title: 'Add Work',
+                      subTitle: 'Your office address',
                     ),
                   ],
                 ),
