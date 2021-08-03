@@ -1,10 +1,18 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:rider_app/auth/singup_screen.dart';
 import 'package:rider_app/auth/login_screen.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   runApp(MyApp());
 }
+
+DatabaseReference userRef =
+    FirebaseDatabase.instance.reference().child('users');
 
 class MyApp extends StatelessWidget {
   static const String idScreen = 'mainScreen';
