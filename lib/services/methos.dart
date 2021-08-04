@@ -7,7 +7,7 @@ import 'package:rider_app/services/apis.dart';
 class Methods {
   static Future<String> searchCoordinationAddress(
       Position position, context) async {
-    String placeAdress = '';
+    String placeAdress = 'REQUEST_DENIED';
     String url =
         'https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.latitude},${position.longitude}&key=AIzaSyBxh495I4tEc6Q37vGyuqt2i3Mjpoheqis';
     var response = await ApiMethode.getRequest(url);

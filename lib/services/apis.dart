@@ -6,9 +6,13 @@ class ApiMethode {
     try {
       http.Response response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
-        String jsonData = response.body;
-        var decodeData = jsonDecode(jsonData);
-        return decodeData;
+        if (json.decode(response.body)["status"] != "REQUEST_DENIED") {
+          String jsonData = response.body;
+          var decodeData = jsonDecode(jsonData);
+          return decodeData;
+        } else {
+          return 'Fieled';
+        }
       } else {
         return 'Fieled';
       }
