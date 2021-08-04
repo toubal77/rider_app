@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:rider_app/services/methos.dart';
 
 class MapApp extends StatefulWidget {
   @override
@@ -18,12 +19,14 @@ class _MapAppState extends State<MapApp> {
   void locatePosition() async {
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
-    Position currentPosition = position;
+
     LatLng latLatPosistion = LatLng(position.latitude, position.longitude);
     CameraPosition cameraPosition =
         new CameraPosition(target: latLatPosistion, zoom: 14);
     _googleController
         .animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+    String address = await Methods.searchCoordinationAddress(position);
+    print('This is your Address: ' + address);
   }
 
   @override

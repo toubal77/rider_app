@@ -33,6 +33,7 @@ dependencies:
   geolocator: ^7.4.0
   firebase_database: ^7.1.2
   google_maps_flutter: ^2.0.6
+  http: ^0.13.3
   
 
 dev_dependencies:
