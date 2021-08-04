@@ -25,7 +25,7 @@ class _MapAppState extends State<MapApp> {
         new CameraPosition(target: latLatPosistion, zoom: 14);
     _googleController
         .animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
-    String address = await Methods.searchCoordinationAddress(position);
+    String address = await Methods.searchCoordinationAddress(position, context);
     print('This is your Address: ' + address);
   }
 

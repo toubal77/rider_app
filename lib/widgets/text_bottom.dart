@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:rider_app/provider/app_data.dart';
 
 class TextBottom extends StatelessWidget {
   final Icon icon;
@@ -20,7 +22,13 @@ class TextBottom extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(title),
+            Text(
+              title == 'Add Home'
+                  ? Provider.of<AppData>(context).pickUpLocation != null
+                      ? Provider.of<AppData>(context).pickUpLocation!.placeName!
+                      : 'Add Home'
+                  : title,
+            ),
             SizedBox(
               height: 4,
             ),
