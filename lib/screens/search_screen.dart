@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rider_app/configMaps.dart';
 import 'package:rider_app/provider/app_data.dart';
+import 'package:rider_app/services/apis.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -12,6 +14,20 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   TextEditingController pickUpController = new TextEditingController();
   TextEditingController dropOffController = new TextEditingController();
+
+  void findList(String placeName) async {
+    if (placeName.length > 1) {
+      String autoComplete =
+          'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$placeName&key=$mapKey&sessiontoken=1234567890&components=country:dz';
+      var res = await ApiMethode.getRequest(autoComplete);
+      if (res == 'Fieled') {
+        return;
+      }
+      print('Places Predictions Response :');
+      print(res);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     pickUpController.text = Provider.of<AppData>(context).pickUpLocation != null
@@ -135,6 +151,9 @@ class _SearchScreenState extends State<SearchScreen> {
                                   contentPadding: EdgeInsets.only(
                                       left: 11, top: 8, bottom: 8),
                                 ),
+                                onChanged: (value) {
+                                  findList(value);
+                                },
                               ),
                             ),
                           ),
