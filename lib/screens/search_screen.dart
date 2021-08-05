@@ -4,6 +4,7 @@ import 'package:rider_app/configMaps.dart';
 import 'package:rider_app/models/place_predictions.dart';
 import 'package:rider_app/provider/app_data.dart';
 import 'package:rider_app/services/apis.dart';
+import 'package:rider_app/widgets/list_search.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -179,88 +180,10 @@ class _SearchScreenState extends State<SearchScreen> {
               height: 10,
             ),
             //placePredictionsList!.length > 0
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-              child: ListView.separated(
-                padding: EdgeInsets.all(0),
-                shrinkWrap: true,
-                physics: ClampingScrollPhysics(),
-                separatorBuilder: (BuildContext context, int index) => Divider(
-                  height: 1,
-                  color: Colors.grey,
-                  thickness: 1.0,
-                ),
-                // itemCount: placePredictionsList!.length,
-                itemCount: 3,
-                itemBuilder: (context, index) {
-                  //       return PredictionTile(placePredictionsList![index]!);
-
-                  return PredictionTile();
-                },
-              ),
-            )
+            ListSearch(),
             //    : Container(),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class PredictionTile extends StatelessWidget {
-  // final PlacePruedictions placePredictions;
-  // PredictionTile(this.placePredictions);
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          SizedBox(
-            width: 4,
-          ),
-          Row(
-            children: [
-              Icon(Icons.add_location),
-              SizedBox(
-                width: 14,
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 4,
-                    ),
-                    Text(
-                      //       placePredictions.mainText!,
-                      'main Text',
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    SizedBox(
-                      height: 2,
-                    ),
-                    Text(
-                      //  placePredictions.secondaryText!,
-                      'secondary text',
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 4,
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            width: 10,
-          ),
-        ],
       ),
     );
   }
