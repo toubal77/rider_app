@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rider_app/configMaps.dart';
+import 'package:rider_app/models/place_predictions.dart';
 import 'package:rider_app/provider/app_data.dart';
 import 'package:rider_app/services/apis.dart';
 
@@ -14,7 +15,7 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   TextEditingController pickUpController = new TextEditingController();
   TextEditingController dropOffController = new TextEditingController();
-
+  List<PlacePruedictions?>? placePredictionsList;
   void findList(String placeName) async {
     if (placeName.length > 1) {
       String autoComplete =
@@ -23,8 +24,18 @@ class _SearchScreenState extends State<SearchScreen> {
       if (res == 'Fieled') {
         return;
       }
-      print('Places Predictions Response :');
-      print(res);
+
+      if (res["status"] == "OK") {
+        var prediction = res["prediction"];
+        var placesList = (prediction as List)
+            .map((e) => PlacePruedictions.fromJson(
+                  (e),
+                ))
+            .toList();
+        setState(() {
+          placePredictionsList = placesList;
+        });
+      }
     }
   }
 
@@ -163,9 +174,93 @@ class _SearchScreenState extends State<SearchScreen> {
                   ],
                 ),
               ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            //placePredictionsList!.length > 0
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              child: ListView.separated(
+                padding: EdgeInsets.all(0),
+                shrinkWrap: true,
+                physics: ClampingScrollPhysics(),
+                separatorBuilder: (BuildContext context, int index) => Divider(
+                  height: 1,
+                  color: Colors.grey,
+                  thickness: 1.0,
+                ),
+                // itemCount: placePredictionsList!.length,
+                itemCount: 3,
+                itemBuilder: (context, index) {
+                  //       return PredictionTile(placePredictionsList![index]!);
+
+                  return PredictionTile();
+                },
+              ),
             )
+            //    : Container(),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class PredictionTile extends StatelessWidget {
+  // final PlacePruedictions placePredictions;
+  // PredictionTile(this.placePredictions);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        children: [
+          SizedBox(
+            width: 4,
+          ),
+          Row(
+            children: [
+              Icon(Icons.add_location),
+              SizedBox(
+                width: 14,
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 4,
+                    ),
+                    Text(
+                      //       placePredictions.mainText!,
+                      'main Text',
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    SizedBox(
+                      height: 2,
+                    ),
+                    Text(
+                      //  placePredictions.secondaryText!,
+                      'secondary text',
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 4,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            width: 10,
+          ),
+        ],
       ),
     );
   }

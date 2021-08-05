@@ -75,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Divider(
                         height: 1,
-                        color: Colors.yellowAccent,
+                        color: Colors.grey,
                         thickness: 1.0,
                       ),
                       SizedBox(
